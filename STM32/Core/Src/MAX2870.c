@@ -26,8 +26,11 @@ void MAX2870_Init(uint64_t Frequency) {
 	
 	HAL_GPIO_WritePin(MAX_CE_GPIO_Port, MAX_CE_Pin, GPIO_PIN_SET);
 	MAX2870_WriteRegs();
-	while(HAL_GPIO_ReadPin(MAX_LD_GPIO_Port, MAX_LD_Pin) == GPIO_PIN_RESET) {
+	
+	uint32_t tryes = 0;
+	while(HAL_GPIO_ReadPin(MAX_LD_GPIO_Port, MAX_LD_Pin) == GPIO_PIN_RESET && tryes < 2000) {
 		HAL_Delay(1);
+		tryes++;
 	}
 	HAL_GPIO_WritePin(MAX_CE_GPIO_Port, MAX_CE_Pin, GPIO_PIN_RESET);
 }

@@ -4,6 +4,7 @@ bool TRANSMITTER_NeedChangeBand = false;
 uint8_t TRANSMITTER_Band_index = 0;
 
 void TRANSMITTER_Init(void) {
+	HAL_Delay(3000);
 	MAX2870_Init(FREQUENCIES[TRANSMITTER_Band_index]);
 }
 
