@@ -12,7 +12,7 @@
 //static uint64_t FREQUENCIES[] = {24930, 28200, 144445500, 432450000, 1296900000, 5760895000, 3456290000}; // 12m, 10m, 2m, 70cm, 23cm, 6cm, 3cm (10ghz band from 3x harmonics)
 static uint64_t FREQUENCIES[] = {144445500, 432450000, 1296900000}; // 2m, 70cm, 23cm
 //static uint64_t FREQUENCIES[] = {144445500, 432450000, 1296900000, 5760895000, 3456290000}; // 2m, 70cm, 23cm, 6cm, 3cm (10ghz band from 3x harmonics)
-//static uint64_t FREQUENCIES[] = {3456290000}; // single band
+//static uint64_t FREQUENCIES[] = {144445500}; // single band
 static char CW_MESSAGE[] = "CQ CQ BEACON 73";
 
 #endif
