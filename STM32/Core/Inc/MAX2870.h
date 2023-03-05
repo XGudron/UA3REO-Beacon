@@ -39,8 +39,10 @@
 #define MAX2870_ERROR_PFD_AND_STEP_FREQUENCY_HAS_REMAINDER 19
 #define MAX2870_ERROR_PFD_LIMITS 20
 
-extern void MAX2870_Init(uint64_t Frequency);
+extern bool MAX2870_Init(uint64_t Frequency);
+extern bool MAX2870_CalcAndSetFrequency(uint64_t Frequency);
 extern void MAX2870_RF_OFF(void);
+extern void MAX2870_WriteRegs(void);
 extern int MAX2870_SetReference(uint32_t f, uint16_t r, uint8_t ReferenceDivisionType);
 extern int  MAX2870_SetFrequency(float64_t Frequency, uint8_t PowerLevel, uint8_t AuxPowerLevel, uint8_t AuxFrequencyDivider, bool PrecisionFrequency, uint32_t MaximumFrequencyError, uint32_t CalculationTimeout);
 

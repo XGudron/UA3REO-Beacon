@@ -60,12 +60,24 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define LED_Pin GPIO_PIN_13
 #define LED_GPIO_Port GPIOC
+#define ONLY_DASHES_Pin GPIO_PIN_0
+#define ONLY_DASHES_GPIO_Port GPIOA
+#define BAND_A2_Pin GPIO_PIN_2
+#define BAND_A2_GPIO_Port GPIOA
 #define MAX_CE_Pin GPIO_PIN_3
 #define MAX_CE_GPIO_Port GPIOA
 #define MAX_CS_Pin GPIO_PIN_4
 #define MAX_CS_GPIO_Port GPIOA
 #define MAX_LD_Pin GPIO_PIN_6
 #define MAX_LD_GPIO_Port GPIOA
+#define BAND_B0_Pin GPIO_PIN_0
+#define BAND_B0_GPIO_Port GPIOB
+#define BAND_B1_Pin GPIO_PIN_1
+#define BAND_B1_GPIO_Port GPIOB
+#define BAND_B10_Pin GPIO_PIN_10
+#define BAND_B10_GPIO_Port GPIOB
+#define BAND_B11_Pin GPIO_PIN_11
+#define BAND_B11_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

@@ -6,7 +6,6 @@ static uint32_t MAX2870_R[6] = {0x007D0000, 0x2000FFF9, 0x18006E42, 0x0000000B, 
 static uint32_t MAX2870_ChanStep = 100000UL;
 static int32_t MAX2870_FrequencyError = 0;
 
-static void MAX2870_WriteRegs(void);
 static uint16_t MAX2870_ReadR(void);
 static uint8_t MAX2870_ReadRDIV2(void);
 static double MAX2870_ReadPFDfreq(void);
@@ -16,23 +15,37 @@ static uint32_t BitFieldManipulation_WriteBF_dword(uint8_t BitStart, uint8_t Bit
 
 /////////////////////////////////////////////
 
-void MAX2870_Init(uint64_t Frequency) {
+bool MAX2870_Init(uint64_t Frequency) {
+	static uint64_t currentFrequency = 0;
+	if (Frequency == currentFrequency) {
+		return true;
+	}
+	
+	
 	HAL_GPIO_WritePin(MAX_CE_GPIO_Port, MAX_CE_Pin, GPIO_PIN_SET);
 	MAX2870_RF_OFF();
 	HAL_GPIO_WritePin(MAX_CE_GPIO_Port, MAX_CE_Pin, GPIO_PIN_RESET);
 	
 	MAX2870_SetReference(REFERENCE_CLOCK, 1, MAX2870_REF_UNDIVIDED);
-	MAX2870_SetFrequency(Frequency, POWER_LEVEL, 0, MAX2870_AUX_FUNDAMENTAL, true, 0, 10000);
+	MAX2870_SetFrequency(Frequency, POWER_LEVEL, 0, MAX2870_AUX_FUNDAMENTAL, true, 0, 2000);
 	
 	HAL_GPIO_WritePin(MAX_CE_GPIO_Port, MAX_CE_Pin, GPIO_PIN_SET);
 	MAX2870_WriteRegs();
 	
 	uint32_t tryes = 0;
 	while(HAL_GPIO_ReadPin(MAX_LD_GPIO_Port, MAX_LD_Pin) == GPIO_PIN_RESET && tryes < 2000) {
+		MAX2870_WriteRegs();
 		HAL_Delay(1);
 		tryes++;
 	}
 	HAL_GPIO_WritePin(MAX_CE_GPIO_Port, MAX_CE_Pin, GPIO_PIN_RESET);
+	
+	if(tryes >= 2000) {
+		return false;
+	}
+	
+	currentFrequency = Frequency;
+	return true;
 }
 
 void MAX2870_RF_OFF(void) {
@@ -361,7 +374,7 @@ int  MAX2870_SetFrequency(float64_t Frequency, uint8_t PowerLevel, uint8_t AuxPo
   return MAX2870_ERROR_NONE; // ok
 }
 
-static void MAX2870_WriteRegs(void) {
+void MAX2870_WriteRegs(void) {
   for (int i = 5 ; i >= 0 ; i--) { // sequence according to the MAX2870 datasheet
 		uint8_t txData[4];
 		// Move bits around to deal with the little endiness on the STM32
@@ -378,7 +391,7 @@ static void MAX2870_WriteRegs(void) {
 		HAL_GPIO_WritePin(MAX_CS_GPIO_Port, MAX_CS_Pin, GPIO_PIN_RESET);
 
 		// Transmit all the bits!
-		HAL_SPI_Transmit(&hspi1, (uint8_t *) txData, 4, 50);
+		HAL_SPI_Transmit(&hspi1, (uint8_t *) txData, 4, HAL_MAX_DELAY);
 
 		// Once Transfer complete, pull LE high
 		while (HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
