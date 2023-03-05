@@ -10,9 +10,9 @@ Use Keil IDE for compile project or use pre-build firmwares
 
 By default, the beacon cycles through frequencies sequentially.
 
-*If connect B11 to GND, Frequency only 2m
-*If connect B10 to GND, Frequency only 70cm
-*If connect B1 to GND, Frequency only 23cm
-*If connect B0 to GND, Frequency only 6cm
-*If connect A2 to GND, Frequency only 3cm
-*If connect A0 to GND, CW message replaced by long dashes
+* If connect B11 to GND, Frequency only 2m
+* If connect B10 to GND, Frequency only 70cm
+* If connect B1 to GND, Frequency only 23cm
+* If connect B0 to GND, Frequency only 6cm
+* If connect A2 to GND, Frequency only 3cm
+* If connect A0 to GND, CW message replaced by long dashes
